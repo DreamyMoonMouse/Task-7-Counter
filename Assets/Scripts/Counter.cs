@@ -1,16 +1,16 @@
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using System.Collections;
 
 public class Counter : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI _text;
     [SerializeField] private float _deley = 0.5f;
     
-    private int _count = 0;  
+    public delegate void OnCountUpdated(int newCount);
+    public event OnCountUpdated CountUpdated;
+    
+    private int _count = 0;
     private bool _isRunning = false;  
-    private Coroutine _counterCoroutine;  
+    private Coroutine _counterCoroutine;
 
     private void Update()
     {
@@ -28,15 +28,15 @@ public class Counter : MonoBehaviour
             }
         }
     }
-    
+
     private IEnumerator IncrementCounter()
     {
         var wait = new WaitForSeconds(_deley);
-        
+
         while (_isRunning)
         {
             _count++;
-            _text.text = _count.ToString();
+            CountUpdated?.Invoke(_count);
 
             yield return wait;
         }
