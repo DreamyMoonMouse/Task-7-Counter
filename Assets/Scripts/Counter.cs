@@ -1,12 +1,12 @@
 using UnityEngine;
 using System.Collections;
+using System;
 
 public class Counter : MonoBehaviour
 {
     [SerializeField] private float _deley = 0.5f;
     
-    public delegate void OnCountUpdated(int newCount);
-    public event OnCountUpdated CountUpdated;
+    public event Action<int> CountUpdated;
     
     private int _value = 0;
     private bool _isRunning = false;  
