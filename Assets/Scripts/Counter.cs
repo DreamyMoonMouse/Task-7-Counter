@@ -8,7 +8,7 @@ public class Counter : MonoBehaviour
     public delegate void OnCountUpdated(int newCount);
     public event OnCountUpdated CountUpdated;
     
-    private int _count = 0;
+    private int _value = 0;
     private bool _isRunning = false;  
     private Coroutine _counterCoroutine;
 
@@ -24,19 +24,19 @@ public class Counter : MonoBehaviour
             else
             {
                 _isRunning = true;
-                _counterCoroutine = StartCoroutine(IncrementCounter());
+                _counterCoroutine = StartCoroutine(Increment());
             }
         }
     }
 
-    private IEnumerator IncrementCounter()
+    private IEnumerator Increment()
     {
         var wait = new WaitForSeconds(_deley);
 
         while (_isRunning)
         {
-            _count++;
-            CountUpdated?.Invoke(_count);
+            _value++;
+            CountUpdated?.Invoke(_value);
 
             yield return wait;
         }

@@ -1,23 +1,17 @@
-using TMPro;
 using UnityEngine;
 
 public class Display : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI _text;
     [SerializeField] private Counter _counter;
+    [SerializeField] private View _view;
 
     private void OnEnable()
     {
-        _counter.CountUpdated += UpdateDisplay; 
+        _counter.CountUpdated += _view.Update;
     }
 
     private void OnDisable()
     {
-        _counter.CountUpdated -= UpdateDisplay; 
-    }
-
-    private void UpdateDisplay(int newCount)
-    {
-        _text.text = newCount.ToString();
+        _counter.CountUpdated -= _view.Update;
     }
 }
